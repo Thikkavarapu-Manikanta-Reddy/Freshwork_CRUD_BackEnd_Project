@@ -54,6 +54,28 @@ app.get('/:filename/getvalue',(req,res)=>{
     res.json({Values :array})
 })
 
+//delete    
+//@post/:filename/delete
+app.delete('/:filename/delete',(req,res)=>{
+    store=new datastore({path:`./data-store/${req.params.filename}.json`})
+    var count=0
+    Object.entries(req.body).forEach(entry=>{
+        if(store.hasOwn(entry[0])){
+            count++;
+            store.del(entry[0])      
+        }
+        else{
+            res.json({error:`${entry[0]} does not exist`})
+        }      
+    })
+    if(count==0){
+        res.json({
+            status:"No such key or no key selected"
+        })
+    }
+    res.json({status:"requested keys are deleted"})
+})
+
 app.listen(3000,()=>{
     console.log('app is running at '+port)    
 })
