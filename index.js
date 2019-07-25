@@ -18,14 +18,16 @@ app.get('/',(req,res)=>{
 });
 
 var storedata;
-//@create new datastore
+//create
+//To create a file to store the data(key-value)
 app.get('/:filename',(req,res)=>{
     storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
     // res.json(`Currently ,You are in ${req.params.filename} file`)
     res.json(JSON.parse(storedata.json(null,2)))
 });
 
-//@post/:filename/create
+//update and create
+//For creating a data and also for updating a data with key as reference
 app.post('/:filename/update',(req,res)=>{
     
     storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
@@ -39,8 +41,8 @@ app.post('/:filename/update',(req,res)=>{
     res.json(JSON.parse(storedata.json(null,2))) 
 });
 
-//@get/:filename/getvalue
-
+//getvalue
+//To retrieve the all key-value pairs data
 app.get('/:filename/getvalue',(req,res)=>{
 
     storedata=new datastore({path:`./data-store/${req.params.filename}.json`}) 
@@ -55,7 +57,7 @@ app.get('/:filename/getvalue',(req,res)=>{
 });
 
 //delete    
-//@post/:filename/delete
+//To delete the particular key-value pair
 app.delete('/:filename/delete',(req,res)=>{
     storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
     var number=0
