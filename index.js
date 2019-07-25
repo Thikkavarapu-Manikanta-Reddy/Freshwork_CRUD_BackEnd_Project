@@ -21,7 +21,7 @@ var storedata;
 //create
 //To create a file to store the data(key-value)
 app.get('/:filename',(req,res)=>{
-    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
+    storedata=new datastore({path:`./databox/${req.params.filename}.json`})
     // res.json(`Currently ,You are in ${req.params.filename} file`)
     res.json(JSON.parse(storedata.json(null,2)))
 });
@@ -30,7 +30,7 @@ app.get('/:filename',(req,res)=>{
 //For creating a data and also for updating a data with key as reference
 app.post('/:filename/update',(req,res)=>{
     
-    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
+    storedata=new datastore({path:`./databox/${req.params.filename}.json`})
     
     Object.entries(req.body).forEach(entry=>{
         if(!storedata.hasOwn(entry[0])){
@@ -45,7 +45,7 @@ app.post('/:filename/update',(req,res)=>{
 //To retrieve the all key-value pairs data
 app.get('/:filename/getvalue',(req,res)=>{
 
-    storedata=new datastore({path:`./data-store/${req.params.filename}.json`}) 
+    storedata=new datastore({path:`./databox/${req.params.filename}.json`}) 
     var array=[]
     Object.entries(req.body).forEach(entry=>{
         if(storedata.hasOwn(entry[0])){
@@ -59,7 +59,7 @@ app.get('/:filename/getvalue',(req,res)=>{
 //delete    
 //To delete the particular key-value pair
 app.delete('/:filename/delete',(req,res)=>{
-    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
+    storedata=new datastore({path:`./databox/${req.params.filename}.json`})
     var number=0
     Object.entries(req.body).forEach(entry=>{
         if(storedata.hasOwn(entry[0])){
