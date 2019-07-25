@@ -14,8 +14,8 @@ app.use(bodyparser.urlencoded({extended:false}))
 app.get('/',(req,res)=>{
     res.json({
         "Welcome":"freshworks"
-    })
-})
+    });
+});
 
 var store
 //@create new datastore
@@ -23,7 +23,7 @@ app.get('/:filename',(req,res)=>{
     store=new datastore({path:`./data-store/${req.params.filename}.json`})
     // res.json(`Currently ,You are in ${req.params.filename} file`)
     res.json(JSON.parse(store.json(null,2)))
-})
+});
 
 //@post/:filename/create
 app.post('/:filename/update',(req,res)=>{
@@ -35,9 +35,9 @@ app.post('/:filename/update',(req,res)=>{
             
           store.set(entry[0],entry[1])
         }      
-    })
+    });
     res.json(JSON.parse(store.json(null,2))) 
-})
+});
 
 //@get/:filename/getvalue
 
@@ -50,9 +50,9 @@ app.get('/:filename/getvalue',(req,res)=>{
             
          array.push(store.get(entry[0]))
         }       
-    })
+    });
     res.json({Values :array})
-})
+});
 
 //delete    
 //@post/:filename/delete
@@ -67,15 +67,15 @@ app.delete('/:filename/delete',(req,res)=>{
         else{
             res.json({error:`${entry[0]} does not exist`})
         }      
-    })
+    });
     if(count==0){
         res.json({
             status:"No such key or no key selected"
-        })
+        });
     }
     res.json({status:"requested keys are deleted"})
-})
+});
 
 app.listen(3000,()=>{
     console.log('app is running at '+port)    
-})
+});
