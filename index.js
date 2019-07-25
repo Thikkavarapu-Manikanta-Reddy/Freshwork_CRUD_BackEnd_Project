@@ -17,38 +17,38 @@ app.get('/',(req,res)=>{
     });
 });
 
-var store
+var storedata;
 //@create new datastore
 app.get('/:filename',(req,res)=>{
-    store=new datastore({path:`./data-store/${req.params.filename}.json`})
+    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
     // res.json(`Currently ,You are in ${req.params.filename} file`)
-    res.json(JSON.parse(store.json(null,2)))
+    res.json(JSON.parse(storedata.json(null,2)))
 });
 
 //@post/:filename/create
 app.post('/:filename/update',(req,res)=>{
     
-    store=new datastore({path:`./data-store/${req.params.filename}.json`})
+    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
     
     Object.entries(req.body).forEach(entry=>{
-        if(!store.hasOwn(entry[0])){
+        if(!storedata.hasOwn(entry[0])){
             
-          store.set(entry[0],entry[1])
+            storedata.set(entry[0],entry[1])
         }      
     });
-    res.json(JSON.parse(store.json(null,2))) 
+    res.json(JSON.parse(storedata.json(null,2))) 
 });
 
 //@get/:filename/getvalue
 
 app.get('/:filename/getvalue',(req,res)=>{
 
-    store=new datastore({path:`./data-store/${req.params.filename}.json`}) 
+    storedata=new datastore({path:`./data-store/${req.params.filename}.json`}) 
     var array=[]
     Object.entries(req.body).forEach(entry=>{
-        if(store.hasOwn(entry[0])){
+        if(storedata.hasOwn(entry[0])){
             
-         array.push(store.get(entry[0]))
+         array.push(storedata.get(entry[0]))
         }       
     });
     res.json({Values :array})
@@ -57,18 +57,18 @@ app.get('/:filename/getvalue',(req,res)=>{
 //delete    
 //@post/:filename/delete
 app.delete('/:filename/delete',(req,res)=>{
-    store=new datastore({path:`./data-store/${req.params.filename}.json`})
-    var count=0
+    storedata=new datastore({path:`./data-store/${req.params.filename}.json`})
+    var number=0
     Object.entries(req.body).forEach(entry=>{
-        if(store.hasOwn(entry[0])){
-            count++;
-            store.del(entry[0])      
+        if(storedata.hasOwn(entry[0])){
+            number++;
+            storedata.del(entry[0])      
         }
         else{
             res.json({error:`${entry[0]} does not exist`})
         }      
     });
-    if(count==0){
+    if(number==0){
         res.json({
             status:"No such key or no key selected"
         });
